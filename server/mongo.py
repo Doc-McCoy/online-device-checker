@@ -5,6 +5,7 @@ import pymongo
 class Mongo:
     def __init__(self):
         path = os.environ.get('MONGODB_URI', "mongodb://localhost:27017")
+        print(path)
         self.mongo = pymongo.MongoClient(path)
         self.db = self.mongo["database"]
         self.client = self.db["clients"]
