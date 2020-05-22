@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from server.mongo import Mongo
+from mongo import Mongo
 
 
 app = Flask(__name__)
