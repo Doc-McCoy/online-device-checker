@@ -14,7 +14,8 @@ class Mongo:
         self.client.insert_one(data)
 
     def get(self):
-        query = self.client.find({}, {'_id': False})
+        #query = self.client.find({}, {'_id': False})
+        query = self.client.find()
         data = {'clients': list(query)}
         return data
 
