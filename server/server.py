@@ -5,7 +5,7 @@ from flask_pymongo import PyMongo
 
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017')
+app.config['MONGO_URI'] = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/teste')
 mongo = PyMongo(app)
 # db = Mongo()
 
@@ -18,8 +18,9 @@ def register():
         return jsonify({'response': 'ok'})
     if request.method == 'GET':
         # clients = db.get()
-        clients = mongo.db.users.find({}, {'_id': False})
-        return jsonify(clients)
+        query = mongo.db.users.find({}, {'_id': False})
+        data = {'clients': list(query)}
+        return jsonify(data)
 
 @app.route('/drop', methods=['DELETE'])
 def drop():
