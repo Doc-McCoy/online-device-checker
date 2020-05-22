@@ -1,5 +1,5 @@
 Flask
-pymongo
+Flask-Pymongo
 requests
 python-telegram-bot
 gunicorn
