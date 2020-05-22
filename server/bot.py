@@ -4,8 +4,8 @@ import telegram
 
 class Bot:
     def __init__(self):
-        token = os.getenv('TELEGRAM_TOKEN')
-        self.channel_id = os.getenv('CHANNEL_ID', '@online_checker_doc')
+        token = os.environ.get('TELEGRAM_TOKEN')
+        self.channel_id = os.environ.get('CHANNEL_ID', '@online_checker_doc')
         self.bot = telegram.Bot(token)
 
     def notify(self, name):
