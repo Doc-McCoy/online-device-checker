@@ -1,30 +1,27 @@
 import os
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
-# from server.mongo import Mongo
 
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/teste')
+mongo_uri = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/teste')
+mongo_uri += '?retryWrites=false'
+app.config['MONGO_URI'] = mongo_uri
 mongo = PyMongo(app)
-# db = Mongo()
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         data = request.get_json()
-        # db.insert(data)
         mongo.db.users.insert_one(data)
         return jsonify({'response': 'ok'})
     if request.method == 'GET':
-        # clients = db.get()
         query = mongo.db.users.find({}, {'_id': False})
         data = {'clients': list(query)}
         return jsonify(data)
 
 @app.route('/drop', methods=['DELETE'])
 def drop():
-    # db.drop()
     return jsonify({'response': 'database dropped'})
 
 
