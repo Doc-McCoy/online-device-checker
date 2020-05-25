@@ -5,5 +5,5 @@ source .venv/bin/activate
 
 # Roda a aplicação
 export FLASK_APP=client/client.py
-export FLASK_ENV=development
+# export FLASK_ENV=development
 flask run
