@@ -25,7 +25,7 @@ def is_online(url):
     except:
         return False
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/clients', methods=['GET', 'POST', 'DELETE'])
 def register():
     if request.method == 'POST':
         data = request.get_json()
@@ -35,6 +35,10 @@ def register():
         query = mongo.db.users.find({}, {'_id': False})
         data = {'clients': list(query)}
         return jsonify(data)
+    if request.method == 'DELETE':
+        data = request.get_json()
+        mongo.db.users.delete_one(data)
+        return jsonify({'response': 'Client deleted'})
 
 @app.route('/check', methods=['GET'])
 def check():
@@ -43,10 +47,6 @@ def check():
         if not is_online(client['url']):
             telegram_bot.notify(client['name'])
     return jsonify({'response': 'ping clients...'})
-
-@app.route('/drop', methods=['DELETE'])
-def drop():
-    return jsonify({'response': 'database dropped'})
 
 
 if __name__ == "__main__":
